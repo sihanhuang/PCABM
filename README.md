@@ -6,21 +6,7 @@ Simulation Example.ipynb is a a toy example illustrating how to use pcabm packag
 
 Followings are introductions to pcabm's files:
 
-commFunc.py     -some common functions that will be used often.
-
-dcbm.py         -calculating mle for degree corrected block model
-
-pcabm.py        -calculating mle for pairwise covariates-adjusted stochastic block model
-
-sc.py           -different spectral clustering methods
-
-
-
-
-
-
-
-
-
-
-
+- commFunc.py : some common functions that will be used often.
+- dcbm.py     : calculating mle for degree corrected block model
+- pcabm.py    : calculating mle for pairwise covariates-adjusted stochastic block model
+- sc.py       : different spectral clustering methods
