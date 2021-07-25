@@ -97,7 +97,6 @@ class PCABM():
 
             iteration = 0
             stay = 0
-            cnt = 0
             tabu_set = np.array([],dtype=int)
             
             while (iteration<max_iterations) and (stay < max_stay):
@@ -119,7 +118,6 @@ class PCABM():
                         old_O=new_O;old_E=new_E;old_num=new_num
                         community[index] = label
                         obj = newnLL
-                        cnt+=1
                     else:
                         stay += 1
                             
@@ -129,13 +127,6 @@ class PCABM():
             if(obj<obj_res):
                 community_res = community
                 obj_res = obj
-            
-            #print(init_cnt,iteration,stay,cnt)
-            
-            #if gt.shape[0]==community.shape[0]:
-                #print(obj_res)
-                #print('ARI is', adjusted_rand_score(community,gt))
-                            
             
 
             init_cnt += 1

@@ -4,20 +4,40 @@ from numpy import linalg as LA
 import pcabm.commFunc as cf
 from sklearn.cluster import KMeans
 from scipy.optimize import minimize
+from scipy.sparse.linalg import eigs
 
 
 def SC(Ab,k):
-    L = pd.DataFrame(Ab)
-    w, v = LA.eig(L)
-    w.argsort()[-k:][::-1]
-    X = v[:,w.argsort()[-k:][::-1]]
-    kmeans = KMeans(n_clusters=k).fit(np.real(X))
-    return(kmeans)
+    w, v = eigs(0.0+Ab, k, which='LR')
+    kmeans = KMeans(n_clusters=k).fit(np.real(v))
+    return(np.real(w),np.real(v),kmeans)
+
+def SC_r(Ab,k):
+    d = np.mean(Ab);
+    dvec = np.mean(Ab, axis=0);
+    adjvec = 2*d/dvec;
+    adjvec[adjvec>1]=1;
+    adjmat=np.sqrt(np.outer(adjvec,adjvec));
+    
+    return(SC(Ab*adjvec,k))
+
+def SCLP(Ab,k):
+    dvec = np.mean(Ab, axis=0);
+    adjmat=np.sqrt(np.outer(1/dvec,1/dvec));
+
+    w, v = eigs(0.0+Ab*adjmat, k, which='LR');
+    kmeans = KMeans(n_clusters=k).fit(np.real(v));
+    return(np.real(w),np.real(v),kmeans)
+
+def SCLP_r(Ab,k,tau=0):
+    if tau == 0:
+        tau = np.max(np.mean(Ab, axis=0));
+    Ab = tau*np.ones(Ab.shape[0])/Ab.shape[0]+Ab;
+    return(SCLP(Ab,k))
 
 def SCORE(Ab,k):
-    n=Ab.shape[0]
-    L = pd.DataFrame(Ab)
-    w, v = LA.eig(L)
+    n = Ab.shape[0]
+    w, v = LA.eig(Ab)
     X = v[:,abs(w).argsort()[-k:][::-1]]
     Y = X[:,1]/X[:,0];Y=np.nan_to_num(Y);Y=np.real(Y)#;Y[abs(Y)>100]=0
     kmeans = KMeans(n_clusters=k).fit(Y.reshape((n,k-1)))
