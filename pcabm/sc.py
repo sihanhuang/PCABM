@@ -19,7 +19,7 @@ def SC_r(Ab,k):
     adjvec[adjvec>1]=1;
     adjmat=np.sqrt(np.outer(adjvec,adjvec));
     
-    return(SC(Ab*adjvec,k))
+    return(SC(Ab*adjmat,k))
 
 def SCLP(Ab,k):
     dvec = np.mean(Ab, axis=0);
