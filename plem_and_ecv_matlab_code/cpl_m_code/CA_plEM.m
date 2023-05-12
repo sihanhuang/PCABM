@@ -161,8 +161,9 @@ chat = e;
             while (nu <= emN) && (~CONVERGED) %(delta > deltaMax)
                 % Z is K x n   % Bs is n*K, Bjkehat is n*K
                 % Phat_lk is l in c, k in e
-                Z = -Phat * Bjkehat' + log(Phat)*Bs' + ...
-                    repmat(sum(log(Bjkehat) .* Bs, 2)', K, 1) ;
+%  2023.5.12              Z = -Phat * Bjkehat' + log(Phat)*Bs' + ...
+%  2023.5.12                  repmat(sum(log(Bjkehat) .* Bs, 2)', K, 1) ;
+                Z = -Phat * Bjkehat' + log(Phat)*Bs';%2023.5.12
                 % Z: pi_il = pi_l * exp(Z_li)
                 Zmean = mean(Z);   %1*n
                 Z = Z - repmat(Zmean,K,1);
@@ -182,7 +183,8 @@ chat = e;
                 
                 alpha = alpha ./ regularize( repmat(post_denom,K,1) ); %pi_{li}hat
                 
-                plVal = sum( log(post_denom) ) + sum(Zmean);  %log pseudo likelihood                
+% 2023.5.12               plVal = sum( log(post_denom) ) + sum(Zmean);  %log pseudo likelihood  
+        
                 % alpha is K x n -- This is posterior prob. of labels pi_li
                 % Bs is n x K
                 % Bjkehat is n*K
@@ -213,6 +215,8 @@ chat = e;
                  %Phat =  ( Bs' * alpha' ) ./ ( Bjkehat' * alpha' );%wrong!
                  
                  Phat = (alpha * Bs) ./ (alpha * Bjkehat);
+                 
+                 plVal = sum(sum(alpha .* (repmat(pih(:),1,n)-Phat * Bjkehat' + log(Phat)*Bs')));  % 2023.5.12
                  
 %                 Lambdah = regularize( ...
 %                         diag(1./ regularize(pih) )*(alpha*Bs/n) );
