@@ -24,6 +24,27 @@ def O(e,Ab):
             O[i,j]= np.sum(Ab[np.ix_(posi[i],posi[j])])
     return O
 
+def b(e,Ab): ## return n * K, can be replaced by matrix mult
+    K = e.max ()
+    n = Ab. shape [0]
+    posi=position(e)
+    b = np.zeros ((n, K+1))
+    for j in np.arange (K+1):
+        b[:,j] = np.sum(Ab[:, position(e)[j]],1)
+    return b
+
+def xi(e, gamma,Z): ## return n * K, can be replaced by matrix mult
+    if type(gamma)==float or type(gamma)==int or type(gamma)==np.float64 or type(gamma)==np.int64:
+        gamma = np.array([gamma])
+    K = e.max()
+    n = Z.shape[0]
+    exp_mat = np.exp(np.dot(Z, gamma))
+    posi=position(e)
+    xi = np.zeros((n,K+1))
+    for j in np.arange(K+1):
+        xi[:,j] = np.sum(exp_mat[:,position(e)[j]],1)
+    return xi
+
 def E(e,gamma,Z):
     if type(gamma)==float or type(gamma)==int or type(gamma)==np.float64 or type(gamma)==np.int64:
         gamma = np.array([gamma])
