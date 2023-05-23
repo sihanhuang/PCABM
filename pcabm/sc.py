@@ -65,3 +65,16 @@ def SCWA(Ab,Z,k, gamma=0, degree = False):
     return(kmeans,gamma)
 
 
+def SCWA_r(Ab,Z,k, gamma=0, degree = False):
+    if len(Z.shape)==2:
+        p=1
+    else:
+        p = Z.shape[2]
+    n = Ab.shape[0]
+    if not np.array(gamma).all():
+        gamma = minimize(cf.nLLGamma,np.zeros(p),args=(np.random.randint(2, size=n),Ab,Z,),method='BFGS', options={'disp': False}, tol=10e-5).x
+    
+    adjust = np.exp(np.dot(Z,gamma))
+    return SC_r(Ab/adjust,k)
+
+
