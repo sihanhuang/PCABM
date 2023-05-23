@@ -53,7 +53,6 @@ def SCWA(Ab,Z,k, gamma=0, degree = False):
     if not np.array(gamma).all():
         gamma = minimize(cf.nLLGamma,np.zeros(p),args=(np.random.randint(2, size=n),Ab,Z,),method='BFGS', options={'disp': False}, tol=10e-5).x
     
-    #indi = coef*np.ones(n*n); indi = indi.reshape((n,n));adjust = np.maximum(indi,np.exp(np.dot(Z,gamma)))
     adjust = np.exp(np.dot(Z,gamma))
     L = pd.DataFrame(Ab/adjust)
     w, v = LA.eig(L)
@@ -75,6 +74,7 @@ def SCWA_r(Ab,Z,k, gamma=0, degree = False):
         gamma = minimize(cf.nLLGamma,np.zeros(p),args=(np.random.randint(2, size=n),Ab,Z,),method='BFGS', options={'disp': False}, tol=10e-5).x
     
     adjust = np.exp(np.dot(Z,gamma))
-    return SC_r(Ab/adjust,k)
+    _,_,km = SC_r(Ab/adjust,k)
+    return(km,gamma)
 
 
