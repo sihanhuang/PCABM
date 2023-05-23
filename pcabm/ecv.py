@@ -105,7 +105,7 @@ class variableSelect():
                 select_cur.append(d)
                 gammah_sub[d] = minimize(cf.nLLGamma, np.zeros(len(select_cur)),
                     args=(np.random.randint(self.k, size=self.eff_n), self.Ab, self.Z[:, :,select_cur],),
-                    method='BFGS', options={'disp': False}, tol=10-5).x
+                    method='BFGS', options={'disp': False}, tol=10e-5).x
 
             Ldm_lik = np.zeros(shape=(self.p, Nrep))-float('inf')
             for m in range (Nrep):
