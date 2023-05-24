@@ -59,9 +59,10 @@ class SBM():
             for label in np.setdiff1d(random.sample(range(0, self.k), children),community[index]):
                 new_O = self.updateO(old_O,community,index,label)
                 new_num = self.updatenum(old_num,community,index,label)
-                if np.min(new_O)==0:
+                new_E = np.matmul(new_num.reshape(self.k,1),new_num.reshape(1,self.k))-np.diag(new_num)
+                if np.min(new_O)==0 or np.min(new_E)==0:
                     break
-                newnLL = (np.sum(new_O)/2-np.nansum(new_O*np.log(new_O)/2-new_num*np.log(new_num/self.n)))/(self.n**2)
+                newnLL = (np.sum(new_O*np.log(new_E))/2-np.nansum(new_O*np.log(new_O)/2-new_num*np.log(new_num/self.n)))/(self.n**2)
                 if newnLL < obj:
                     stay = 0
                     old_O=new_O;old_num=new_num
@@ -75,6 +76,7 @@ class SBM():
     def fit(self,community_init = np.array([0]),gt = np.array([]), tabu_size=100, init = 30, max_iterations=1000, max_stay=500, children=2):
         
         obj_res = self.nLL_label(np.random.randint(self.k, size=self.n))
+
         init_cnt = 0
         while init_cnt < init:
 
@@ -88,6 +90,7 @@ class SBM():
             if(obj<obj_res):
                 community_res = community
                 obj_res = obj
+                print(obj)
             
             init_cnt += 1
             
