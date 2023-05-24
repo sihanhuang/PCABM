@@ -64,6 +64,8 @@ class DCBM():
                 stay = stay+1
                 for label in np.setdiff1d(random.sample(range(0, self.k), children),community[index]):
                     new_O = self._updateO(old_O,community,index,label)
+                    if np.min(new_O)==0:
+                        break
                     newnLL = -np.sum(new_O*np.log(new_O/cf.summatrix(new_O)))
                     if newnLL < obj:
                         stay = 0
