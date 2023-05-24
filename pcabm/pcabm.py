@@ -111,7 +111,8 @@ class PCABM():
                     new_O = self._updateO(old_O,community,index,label)
                     new_E = self._updateE(old_E,community,index,label)
                     new_num = self._updateNum(old_num,community,index,label)
-                    
+                    if np.min(new_O)==0 or np.min(new_E)==0:
+                        break
                     newnLL = (np.sum(new_O*np.log(new_E))/2-np.nansum(new_O*np.log(new_O)/2-new_num*np.log(new_num/self.n)))/(self.n**2)
                     if newnLL < obj:
                         stay = 0
