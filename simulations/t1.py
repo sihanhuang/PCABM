@@ -21,7 +21,7 @@ from problem import *
 parser = argparse.ArgumentParser(description= 'Setting the Parameters.')
 #parser.add_argument('-n', type=int, default=1000, help= 'number of nodes')
 parser.add_argument('-g', type=float, default=1, help='multiplier of gamma')
-parser.add_argument('-r', type=float, default=1.5, help='multiplier of rho')
+parser.add_argument('-r', type=float, default=2, help='multiplier of rho')
 parser.add_argument('-seed', type=int, default=1, help='random seed')
 args = parser.parse_args()
 param_t=pd.DataFrame({'n': [100,200,300,400,500], 'rho': 5*[args.r], 'gamma': 5*[args.g],
