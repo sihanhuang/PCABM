@@ -32,7 +32,7 @@ SCWA = np.array(SCWA).reshape(len (files), len (SCWA) //len(files))
 SBM = np.array(SBM).reshape(len(files), len(SBM)//len(files))
 PCA = np.array (PCA).reshape(len (files), len (PCA) //len (files))
 DCBM = np.array (DCBM).reshape (len (files), len(DCBM) //len (files))
-SCORE = np.array (SCORE).reshape (len (files), len(DCBM) //len (files))
+SCORE = np.array (SCORE).reshape (len (files), len(SCORE) //len (files))
 
 np.savetxt("../output/"+args.dir+"/SC.csv", SC, delimiter=",")
 np.savetxt("../output/"+args.dir+"/SCWA.csv", SCWA, delimiter=",")
