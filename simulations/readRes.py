@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(description= 'Setting the Parameters.')
 parser.add_argument('-dir', type=str, default="", help='folder') 
 parser.add_argument('-rm', type=bool, default=False, help='remove log')
 args = parser.parse_args()
-files=glob.glob("…/output/"+args.dir+"/*_"+args.dir+".log")
+files=glob.glob("../output/"+args.dir+"/*_"+args.dir+".log")
 
 SC = []
 SCWA = []
@@ -31,8 +31,8 @@ SBM = np.array(SBM).reshape(len(files), len(SBM)//len(files))
 PCA = np.array (PCA).reshape(len (files), len (PCA) //len (files))
 DCBM = np.array (DCBM).reshape (len (files), len(DCBM) //len (files))
 
-np.savetxt("…/output/"+args.dir+"/SC.csv", SC, delimiter=",")
-np.savetxt("…/output/"+args.dir+"/SCWA.csv", SCWA, delimiter=",")
-np.savetxt("…/output/"+args.dir+"/SBM.csv", SBM, delimiter=",") 
-np.savetxt("…/output/"+args.dir+"/PCA.csv",PCA, delimiter=",")
-np.savetxt("…/output/"+args.dir+"/DCBM.csv", DCBM, delimiter=",")
+np.savetxt("../output/"+args.dir+"/SC.csv", SC, delimiter=",")
+np.savetxt("../output/"+args.dir+"/SCWA.csv", SCWA, delimiter=",")
+np.savetxt("../output/"+args.dir+"/SBM.csv", SBM, delimiter=",") 
+np.savetxt("../output/"+args.dir+"/PCA.csv",PCA, delimiter=",")
+np.savetxt("../output/"+args.dir+"/DCBM.csv", DCBM, delimiter=",")
