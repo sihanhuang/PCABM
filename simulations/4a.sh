@@ -6,4 +6,4 @@
 #SBATCH --output=../output/4a/slurm-%a_4a.log
 
 python 4a.py -r 3 -seed $SLURM_ARRAY_TASK_ID 
-#python readInit.py -dir 4a
+#python readRes_score.py -dir 4a
