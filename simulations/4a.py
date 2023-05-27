@@ -20,7 +20,7 @@ from problem import *
 
 parser = argparse.ArgumentParser(description= 'Setting the Parameters.')
 #parser.add_argument('-n', type=int, default=1000, help= 'number of nodes')
-parser.add_argument('-r', type=float, default=1.5, help='multiplier of rho')
+parser.add_argument('-r', type=float, default=3, help='multiplier of rho')
 parser.add_argument('-seed', type=int, default=1, help='random seed')
 args = parser.parse_args()
 param_t=pd.DataFrame({'n': [200,400,600,800,1000], 'rho': 5*[args.r], 'seed': 5*[args. seed]})
