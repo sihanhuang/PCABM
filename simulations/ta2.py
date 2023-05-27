@@ -28,9 +28,9 @@ param_t=pd.DataFrame({'n': 10*[args.n], 'rho': 10*[args.r], 'gamma': 10*[args.g]
     'corr':list(np.arange(10)/10), 'seed': 10*[args. seed]})
 
 results = Parallel(n_jobs=10) (delayed(solve_cov) (row) for index, row in param_t.iterrows())
-results = np.array(results)
 
-for j in range(results.shape[1]) :
-    for i in range(results. shape[0]) :
-        print(results[i,j], end = ' ')
+L= len(results)
+for l in range(L) :
+    for elem in results[l] :
+        print(elem, end = ' ')
     print('')
