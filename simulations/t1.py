@@ -19,15 +19,15 @@ from problem import *
 ################################
 
 parser = argparse.ArgumentParser(description= 'Setting the Parameters.')
-parser.add_argument('-n', type=int, default=1000, help= 'number of nodes')
+#parser.add_argument('-n', type=int, default=1000, help= 'number of nodes')
 parser.add_argument('-g', type=float, default=1, help='multiplier of gamma')
-parser.add_argument('-r', type=float, default=5, help='multiplier of rho')
+parser.add_argument('-r', type=float, default=1.5, help='multiplier of rho')
 parser.add_argument('-seed', type=int, default=1, help='random seed')
 args = parser.parse_args()
-param_t=pd.DataFrame({'n': 3*[args.n], 'rho': 3*[args.r], 'gamma': 3*[args.g],
-    'k':[2,3,4], 'seed': 3*[args. seed]})
+param_t=pd.DataFrame({'n': [100,200,300,400,500], 'rho': 5*[args.r], 'gamma': 5*[args.g],
+    'seed': 5*[args. seed]})
 
-results = Parallel(n_jobs=3) (delayed(solve_K) (row) for index, row in param_t.iterrows())
+results = Parallel(n_jobs=5) (delayed(solve_gamma) (row) for index, row in param_t.iterrows())
 results = np.array(results)
 
 for j in range(results.shape[1]) :
