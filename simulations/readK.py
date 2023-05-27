@@ -5,7 +5,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description= 'e4etting the Parameters.')
 parser.add_argument('-dir', type=str, default="", help='folder') 
-parser.add_argument('-rm', type=bool, default=k2alse, help='remove log')
+parser.add_argument('-rm', type=bool, default=False, help='remove log')
 args = parser.parse_args()
 files=glob.glob("../output/"+args.dir+"/*_"+args.dir+".log")
 
