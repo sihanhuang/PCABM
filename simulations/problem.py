@@ -32,7 +32,7 @@ def gen_adj_5cov(n,k,p,rho,gamma):
     ####################################
     ## Generate Edges
     ####################################
-
+    k = int(k)
     gt = np.random.randint (k, size=n) # ground truth
     B = np.ones ((n, n))
     for i in range(k):
