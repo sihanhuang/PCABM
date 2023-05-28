@@ -14,8 +14,8 @@ SCWA = []
 
 for file in files:
     f=open (file, 'r'). readlines()
-    PCA += list(map(float, f[0].rstrip('\n') .split())) 
-    SCWA += list(map(float, f[1].rstrip('\n').split()))
+    SCWA += list(map(float, f[0].rstrip('\n').split()))
+    PCA += list(map(float, f[1].rstrip('\n') .split())) 
     if args.rm:
         os.remove(file)
 
