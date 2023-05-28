@@ -31,7 +31,7 @@ class chooseK():
         self.expZ = np.exp(np.dot(self.Z,self.gamma))
         self.A1 = np.divide(self.Ab, self.expZ)
 
-    def fit(self, Nrep = 3, Kmax = 6, p_subsam = 0.9) :
+    def fit(self, Nrep = 5, Kmax = 6, p_subsam = 0.9) :
         self.LKm_lik = np.zeros((Kmax, Nrep));
         self.LKm_lik_scaled = np.zeros((Kmax, Nrep));
         self.LKm_se = np.zeros((Kmax, Nrep));
@@ -50,8 +50,17 @@ class chooseK():
                 Ahat_k = np.matmul(np.matmul(U[:, -k:], np.diag(S[-k:])), V[-k:,:]) # n * n matrix
                 eKm, _ = sc.SCWA_r(Ahat_k, np.zeros(shape = (self.eff_n,self.eff_n,1)) , k) 
                 comm_est = eKm.labels_
-                Oll = np.clip(cf.O(comm_est, subsam_Ab), a_min = 1, a_max = 1e300 )
-                Ell = np.clip(cf.O(comm_est, subsam_expZ), a_min = 1, a_max = 1e300 )
+                #Oll = np.clip(cf.O(comm_est, subsam_Ab), a_min = 1, a_max = 1e300 )
+                #Ell = np.clip(cf.O(comm_est, subsam_expZ), a_min = 1, a_max = 1e300 )
+
+                Oll = cf.O(comm_est, subsam_Ab)
+                Ell = cf.O(comm_est, subsam_expZ)
+                if np.sum(Oll==0) or np.sum(Ell==0):
+                    self.LKm_lik[k-1][m] = np.nan
+                    self.LKm_lik_scaled[k-1][m] = np.nan
+                    self.LKm_se[k-1][m] = np.nan
+                    continue
+
                 Bll = np.divide(Oll, Ell)
                 EA_hat = np.multiply(Bll[np.ix_(comm_est, comm_est)], self.expZ) # n * n matrix
 
@@ -62,7 +71,7 @@ class chooseK():
         LK_lik_res = np.mean (self.LKm_lik, 1)
         LK_lik_scaled_res = np.mean(self.LKm_lik_scaled, 1)
         LK_se_res = np.mean(self.LKm_se, 1)
-        return 1+np.argmax(LK_lik_res), 1+np.argmax(LK_lik_scaled_res), 1+np.argmin(LK_se_res)
+        return 1+np.nanargmax(LK_lik_res), 1+np.nanargmax(LK_lik_scaled_res), 1+np.nanargmin(LK_se_res)
 
 class variableSelect():
     def __init__(self, Ab, Z, k, gamma=0):
