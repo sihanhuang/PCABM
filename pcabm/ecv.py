@@ -64,8 +64,6 @@ class chooseK():
         LK_se_res = np.mean(self.LKm_se, 1)
         return 1+np.argmax(LK_lik_res), 1+np.argmax(LK_lik_scaled_res), 1+np.argmin(LK_se_res)
 
-
-
 class variableSelect():
     def __init__(self, Ab, Z, k, gamma=0):
         self.n = Ab.shape[0]
@@ -91,7 +89,7 @@ class variableSelect():
         self.select = [] # set of selected variables
         self.not_select = list(range(self.p)) # set of not selected variables
 
-    def fit(self, Nrep = 5, p_subsam = 0.9, epsilon_L = 0.02) :
+    def fit(self, Nrep = 5, p_subsam = 0.9, epsilon_L = 0.1) :
         Lik_old = - 999999;
         Lik_new = - 99999;
         Lik_history = Lik_new * np.ones(self.p);
