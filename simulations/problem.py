@@ -260,12 +260,6 @@ def solve_dcbm(param) :
         adjusted_rand_score(estSBM, gt), adjusted_rand_score(estPCA, gt), adjusted_rand_score(estDCBM, gt),
         adjusted_rand_score(model_SCORE.labels_, gt))
 
-
-
-
-
-
-
 def solve_vs(param):
     n = int(param['n']); #number
     rho = param['rho' ]*np.log(n)/n#sparsity
@@ -334,4 +328,23 @@ def solve_cov(param):
     selected_cov = vs.fit()
 
     return selected_cov
+
+def solve_covest(param):
+    n = int(param['n']); #number
+    rho = param['rho' ]*np.log(n)/n#sparsity
+    gamma = param['gamma'] #signals of individual information
+    r = param['corr']
+    k, p = 2, 2
+    np.random.seed(int(param['seed']))
+
+    Ab, Z, Z_fake, Z_both, gt = gen_adj_2fake(n,k,rho,gamma,r)
+
+    ####################################
+    ## Estimate gamma
+    ####################################
+
+    gamma_est = minimize(cf.nLLGamma, np.zeros (p), args=(np.random.randint (2, size=n) ,Ab, Z_both,),
+        method='BFGS', options={'disp': False}, tol=10e-5).x
+
+    return gamma_est
 
