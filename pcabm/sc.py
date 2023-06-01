@@ -9,7 +9,7 @@ from scipy.sparse.linalg import eigs
 
 def SC(Ab,k):
     w, v = eigs(0.0+Ab, k, which='LR')
-    kmeans = KMeans(n_clusters=k).fit(np.real(v))
+    kmeans = KMeans(n_clusters=k,n_init=10).fit(np.real(v))
     return(np.real(w),np.real(v),kmeans)
 
 def SC_r(Ab,k):
@@ -26,7 +26,7 @@ def SCLP(Ab,k):
     adjmat=np.sqrt(np.outer(1/dvec,1/dvec));
 
     w, v = eigs(0.0+Ab*adjmat, k, which='LR');
-    kmeans = KMeans(n_clusters=k).fit(np.real(v));
+    kmeans = KMeans(n_clusters=k,n_init=10).fit(np.real(v));
     return(np.real(w),np.real(v),kmeans)
 
 def SCLP_r(Ab,k,tau=0):
@@ -40,7 +40,7 @@ def SCORE(Ab,k):
     w, v = LA.eig(Ab)
     X = v[:,abs(w).argsort()[-k:][::-1]]
     Y = X[:,1]/X[:,0];Y=np.nan_to_num(Y);Y=np.real(Y)#;Y[abs(Y)>100]=0
-    kmeans = KMeans(n_clusters=k).fit(Y.reshape((n,k-1)))
+    kmeans = KMeans(n_clusters=k,n_init=10).fit(Y.reshape((n,k-1)))
     return(kmeans)
 
 
@@ -60,7 +60,7 @@ def SCWA(Ab,Z,k, gamma=0, degree = False):
     if degree:
         Y = X[:,1]/X[:,0]
         X = Y.reshape((n,k-1))
-    kmeans = KMeans(n_clusters=k).fit(X)
+    kmeans = KMeans(n_clusters=k,n_init=10).fit(X)
     return(kmeans,gamma)
 
 
