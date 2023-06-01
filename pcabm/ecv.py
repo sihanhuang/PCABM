@@ -38,6 +38,8 @@ class chooseK():
 
         for m in range(Nrep):
             subOmega = np.random.binomial(1,p_subsam, size= (self.eff_n,self.eff_n));
+            subOmega = np.tril(subOmega,-1)
+            subOmega = subOmega+subOmega.T
             test_size = self.eff_n**2 - np.sum(subOmega);
 
             subsam_A1 = np.multiply(self.A1, subOmega);
@@ -117,6 +119,8 @@ class variableSelect():
             Ldm_lik = np.zeros(shape=(self.p, Nrep))-float('inf')
             for m in range (Nrep):
                 subOmega = np.random.binomial(1, p_subsam, size=(self.eff_n, self.eff_n));
+                subOmega = np.tril(subOmega,-1)
+                subOmega = subOmega+subOmega.T
                 for d in self.not_select:
                     select_cur = self.select[:]
                     select_cur.append(d)
