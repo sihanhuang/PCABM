@@ -9,7 +9,7 @@ parser.add_argument('-rm', type=bool, default=False, help='remove log')
 args = parser.parse_args()
 files=glob.glob("../output/"+args.dir+"/*_"+args.dir+".log")
 
-k1 = []
+#k1 = []
 k2 = []
 k3 = []
 
@@ -17,13 +17,13 @@ for file in files:
     f=open (file, 'r'). readlines()
     if len(f)>3:
         continue
-    k1.append(list(map(float, f[0].rstrip('\n').split())))
+    #k1.append(list(map(float, f[0].rstrip('\n').split())))
     k2.append(list(map(float, f[1].rstrip('\n').split())))
     k3.append(list(map(float, f[2].rstrip('\n').split())))
     if args.rm:
         os.remove(file)
 
-k1 = np.array(k1)
+#k1 = np.array(k1)
 k2 = np.array(k2)
 k3 = np.array(k3)
 
