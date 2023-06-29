@@ -27,6 +27,6 @@ for file in files:
 k2 = np.array(k2)
 k3 = np.array(k3)
 
-np.savetxt("../output/"+args.dir+"/k1.csv", k1, delimiter=",")
+#np.savetxt("../output/"+args.dir+"/k1.csv", k1, delimiter=",")
 np.savetxt("../output/"+args.dir+"/k2.csv", k2, delimiter=",")
 np.savetxt("../output/"+args.dir+"/k3.csv", k3, delimiter=",") 
