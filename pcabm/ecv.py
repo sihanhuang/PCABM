@@ -66,14 +66,14 @@ class chooseK():
                 Bll = np.divide(Oll, Ell)
                 EA_hat = np.multiply(Bll[np.ix_(comm_est, comm_est)], self.expZ) # n * n matrix
 
-                self.LKm_lik[k-1][m] = np.sum(np.multiply(self.Ab-subsam_Ab, np.log(EA_hat))-np.multiply(EA_hat, 1-subOmega))/test_size
+                #self.LKm_lik[k-1][m] = np.sum(np.multiply(self.Ab-subsam_Ab, np.log(EA_hat))-np.multiply(EA_hat, 1-subOmega))/test_size
                 self.LKm_lik_scaled[k-1][m] = np.sum(np.multiply(self.A1-subsam_A1, np.log(EA_hat))-np.multiply(Bll[np.ix_(comm_est, comm_est) ], 1-subOmega))/test_size
                 self.LKm_se[k-1][m] = np.sum(np.multiply(self.A1-Bll[np.ix_(comm_est, comm_est)],1-subOmega)**2)/test_size
 
-        LK_lik_res = np.mean (self.LKm_lik, 1)
+        #LK_lik_res = np.mean (self.LKm_lik, 1)
         LK_lik_scaled_res = np.mean(self.LKm_lik_scaled, 1)
         LK_se_res = np.mean(self.LKm_se, 1)
-        return 1+np.nanargmax(LK_lik_res), 1+np.nanargmax(LK_lik_scaled_res), 1+np.nanargmin(LK_se_res)
+        return 1+np.nanargmax(LK_lik_scaled_res), 1+np.nanargmin(LK_se_res)
 
 class variableSelect():
     def __init__(self, Ab, Z, k, gamma=0):
