@@ -18,8 +18,8 @@ for file in files:
     if len(f)>3:
         continue
     #k1.append(list(map(float, f[0].rstrip('\n').split())))
-    k2.append(list(map(float, f[1].rstrip('\n').split())))
-    k3.append(list(map(float, f[2].rstrip('\n').split())))
+    k2.append(list(map(float, f[0].rstrip('\n').split())))
+    k3.append(list(map(float, f[1].rstrip('\n').split())))
     if args.rm:
         os.remove(file)
 
