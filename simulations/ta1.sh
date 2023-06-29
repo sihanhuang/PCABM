@@ -3,7 +3,11 @@
 #SBATCH --array=1-100
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=10
-#SBATCH --output=../output/ta1/slurm-%a_ta1.log
+#SBATCH --output=/dev/null
 
-python ta1.py -n 500 -g 2 -r 4 -seed $SLURM_ARRAY_TASK_ID 
+logpath="../output/ta1"
+mkdir -p $logpath
+logfile="$logpath/slurm-${SLURM_ARRAY_TASK_ID}_ta1.log"
+
+python ta1.py -n 500 -g 2 -r 4 -seed $SLURM_ARRAY_TASK_ID > ${logfile}
 #python readCovest.py -dir ta1
